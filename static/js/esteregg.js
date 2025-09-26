@@ -1,4 +1,3 @@
-import Konami from "konami";
 
 const easterEgg = new Konami(() => {
   const img = document.createElement("img");
