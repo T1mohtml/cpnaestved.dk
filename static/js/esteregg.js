@@ -14,7 +14,7 @@ window.addEventListener("DOMContentLoaded", () => {
     img.style.zIndex = 9999;
     img.style.boxShadow = "0 0 20px rgba(0,0,0,0.5)";
     img.style.borderRadius = "10px";
-    img.style.transition = "transform 0.5s ease, opacity 0.5s ease";
+    img.style.transition = "transform 0.3s ease, opacity 0.3s ease"; // faster animation for short sound
     img.style.opacity = "0";
 
     document.body.appendChild(img);
@@ -30,19 +30,19 @@ window.addEventListener("DOMContentLoaded", () => {
       img.style.transform = "translate(-50%, -50%) scale(1.1)";
     });
 
-    // Bounce effect
+    // Bounce effect while sound plays
     let scaleUp = true;
     const bounceInterval = setInterval(() => {
       img.style.transform = `translate(-50%, -50%) scale(${scaleUp ? 1.15 : 1.05})`;
       scaleUp = !scaleUp;
-    }, 300);
+    }, 150);
 
-    // Animate out after 5 seconds
-    setTimeout(() => {
+    // Remove image when sound ends
+    audio.addEventListener("ended", () => {
       clearInterval(bounceInterval);
       img.style.opacity = "0";
       img.style.transform = "translate(-50%, -50%) scale(0.95)";
-      setTimeout(() => img.remove(), 500);
-    }, 5000);
+      setTimeout(() => img.remove(), 300);
+    });
   });
 });
